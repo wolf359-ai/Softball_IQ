@@ -26,6 +26,11 @@ h1,.sec{color:#fff}
 .tag{font-size:15px;color:var(--mute);font-weight:600}
 .menu{background:transparent;border:2px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 14px;font-weight:600;font-size:16px;cursor:pointer;margin-bottom:12px}
 .menu:hover{border-color:var(--accent)}
+.opt.sel{border-color:var(--accent)}
+.jy{display:inline-flex;width:44px;height:44px;border-radius:50%;align-items:center;justify-content:center;color:#111;font:700 22px "Barlow Condensed","Arial Narrow",Arial,sans-serif;border:2px solid #fff;flex:0 0 auto}
+.bar{height:8px;background:#2a2a2a;border-radius:6px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--accent)}
+.inp{background:#0f0f0f;border:2px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit;width:120px}
+.sw{display:flex;gap:10px;flex-wrap:wrap}.swb{width:44px;height:44px;border-radius:50%;border:3px solid transparent;cursor:pointer}.swb.sel{border-color:#fff}
 .sec{font:700 26px/1.1 "Barlow Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.02em;margin:20px 0 0}
 .menu:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .q{font-size:19px;font-weight:600;margin:0}
@@ -144,7 +149,7 @@ const Q=[
 {c:"Fielding",p:"LF",b:[1,0,0],o:0,h:['g',86,154],q:`Bunt play: the first baseman, third baseman, and pitcher crash, the second baseman covers first, and the shortstop covers third. Where does the left fielder go?`,a:[`Behind third base to back up the throw`,`Stay in left field`,`Cover first base`,`Go to the pitcher's circle`],e:`If the throw to third gets away, the runner can take extra bases. Outfielders back up the bases on bunts.`},
 {c:"Fielding",p:"LF",b:[1,0,0],o:1,h:['f',24,100],q:`Runner on first, one out. A foul fly drifts toward the left-field fence. Do you catch it?`,a:[`Yes, if you can do it safely. An out is an out`,`No, always let it drop`,`Only if a coach tells you`,`Only with two outs`],e:`Catching it gets an out, even if the runner tags up. Slow down near the fence and use your free hand to feel for it.`},
 {c:"Fielding",p:"LF",b:[0,1,0],o:1,h:['g',58,86],q:`Runner on second, one out. You bobble a single in left field. What's next?`,a:[`Pick it up, set your feet, and make a strong throw to the cutoff`,`Throw it off-balance right away`,`Walk it in`,`Wait for help`],e:`A rushed throw can go wild and let more runners advance. Stay calm and make an accurate throw.`},
-{c:"Fielding",p:"LF",b:[0,1,0],o:1,h:['g',54,84],q:`Runner on second. A single is hit to left. Which infielder is the usual cutoff for a throw home?`,a:[`The third baseman`,`The first baseman`,`The second baseman`,`The pitcher`],e:`The third baseman usually lines up with home for throws from left field. Follow your coach's call and the catcher's directions.`},
+{c:"Fielding",p:"LF",b:[0,1,0],o:1,h:['g',54,84],q:`Runner on second. A single is hit to left. Which infielder is the usual cutoff for a throw home?`,a:[`The shortstop`,`The third baseman`,`The first baseman`,`The pitcher`],e:`On your team's defense the shortstop is the cutoff for throws home from left field. Line up with the plate and listen to the catcher's call.`},
 {c:"Fielding",p:"LF",b:[0,0,1],o:1,q:`Runner on third, one out. Where should you play?`,a:[`A little shallower, so you can throw out a tagging runner`,`As deep as possible`,`Behind the infield`,`Along the foul line`],e:`With a runner on third and one out, a fly ball scores the run. Playing a bit in gives you a better chance to throw her out.`},
 {c:"Fielding",p:"LF",b:[0,1,0],o:0,q:`How should you throw from left field to a cutoff?`,a:[`Crow hop, step toward your target, and throw overhand on a line`,`Throw underhand`,`Throw sidearm off your back foot`,`Throw as high as you can`],e:`A crow hop gives you power and accuracy. A throw on a line gets there quickly and is easy to catch.`},
 {c:"Fielding",p:"LF",b:[1,1,0],o:0,h:['g',54,84],q:`Runners on first and second, nobody out. A single is hit to you. Where does your throw go?`,a:[`To the base the lead runner is heading to, through the cutoff`,`First base`,`Second base`,`The pitcher`],e:`Throw ahead of the lead runner. A good throw can stop the lead runner or keep the other runner from advancing.`},
@@ -172,7 +177,7 @@ const Q=[
 {c:"Fielding",p:"RF",b:[0,1,0],o:1,h:['g',166,84],q:`You misplay a ball in right with a runner on second. What now?`,a:[`Retrieve it quickly, set your feet, and make an accurate throw to the cutoff`,`Throw it off-balance right away`,`Walk it in`,`Wait for help`],e:`A rushed throw can go wild and let more runners advance. Stay calm and make an accurate throw.`},
 {c:"Fielding",p:"RF",b:[0,0,0],o:2,q:`Two outs and nobody on. Where does the right fielder play?`,a:[`A little deeper, so nothing gets over your head`,`Shallow`,`Behind first base`,`In the infield`],e:`With nobody on and two outs, a single isn't as dangerous as an extra-base hit. Play deeper.`},
 {c:"Fielding",p:"3B",b:[1,1,0],o:0,h:['g',64,134],q:`Runners on first and second, nobody out. A hard grounder is hit to you at third. What's your best play?`,a:[`Step on third for the force, then throw to second or first for another out`,`Throw straight to first`,`Tag the runner`,`Hold the ball`],e:`Both runners are forced. Stepping on third gets the first out right away, and a throw to second or first can get a second out.`},
-{c:"Fielding",p:"3B",b:[0,1,0],o:1,h:['g',54,84],q:`Runner on second, one out. A single is hit to left field. As the third baseman, where do you set up?`,a:[`Lined up between the left fielder and home plate as the cutoff`,`On third base`,`Behind the shortstop`,`In foul territory`],e:`The third baseman is usually the cutoff for throws home from left field. Line up with the plate, hold your hands up, and listen to the catcher.`},
+{c:"Fielding",p:"3B",b:[0,1,0],o:1,h:['g',54,84],q:`Runner on second, one out. A single is hit to left field. As the third baseman, where do you set up?`,a:[`On third base, ready to take a throw`,`Lined up between the left fielder and home plate as the cutoff`,`Behind the shortstop`,`In foul territory`],e:`On your team's defense the shortstop is the cutoff for throws from left field. The third baseman stays on third base to protect it and take a throw if the runner holds.`},
 {c:"Fielding",p:"3B",b:[0,0,1],o:1,h:['g',64,134],q:`Runner on third, one out. A grounder is hit to you and the runner breaks for home. What do you do?`,a:[`Throw home to get her at the plate`,`Throw to first`,`Throw to second`,`Hold the ball`],e:`If she breaks, the play is at the plate. If she holds at third, take the sure out at first instead.`},
 {c:"Fielding",p:"SS",b:[1,0,0],o:0,h:['g',86,154],q:`Runner on first, nobody out. The batter bunts and your team's third baseman crashes. Where does the shortstop go?`,a:[`Cover third base to take a throw`,`Cover second base`,`Stay at short`,`Back up first base`],e:`On your team's bunt play, the first baseman, third baseman, and pitcher crash. The second baseman covers first and the shortstop covers third.`},
 {c:"Fielding",p:"SS",b:[1,0,0],o:0,h:['g',112,60],q:`Runner on first. A single is hit to center field. As the shortstop, where do you set up?`,a:[`Lined up between the center fielder and third base as the cutoff`,`On second base`,`In shallow left field`,`Behind home plate`],e:`A good throw to third needs a cutoff in line. Line up with the base and hold your hands up as a target.`},
@@ -194,26 +199,37 @@ const H=[null,null,null,null,null,['g',88,118],['g',130,118],['f',150,100],['g',
 const mine=(q,c)=>q.p!=="*"&&q.p.split(" ").includes(c);
 const PP=["*","*","*","*","*","SS","2B","2B RF","RF","*","*","*","*","*","*","*","RF","LF","RF","LF","CF","LF CF","1B 2B SS 3B","LF","P","LF","LF CF RF","LF","C","1B 2B SS 3B","P","1B 2B SS 3B","SS","C","2B SS","C 1B 2B SS 3B"];
 const BP=[["3B",78,152],["SS",62,140],["2B",156,140],["1B",142,152],["P",108,160]];
-const MV={5:[["2B",118,98],["1B",156,140]],6:[["1B",156,140]],24:[["P",126,188]],28:[["SS",118,98]],30:BP,33:[["C",96,190]],37:[["P",156,140]],38:[["P",120,176]],42:[["SS",118,98]],43:[["P",120,176]],44:BP,45:[["SS",118,98],["1B",156,140]],49:[["2B",118,98],["1B",156,140]],50:[["1B",134,152],["2B",156,140]],52:BP,55:[["SS",118,98],["1B",156,140]],57:[["C",170,150]],62:[["SS",118,98],["P",156,140]],63:[["1B",138,130]],64:[["2B",118,98],["1B",156,140]],65:[["2B",138,82]],66:[["2B",156,140],["1B",134,152]],68:[["SS",84,82]],71:[["2B",118,98],["1B",156,140]],74:BP,118:[["2B",118,98],["1B",156,140]],119:[["3B",82,130]],121:BP,122:[["SS",92,100]],124:BP,126:[["1B",156,140]],127:BP,133:[["SS",58,112]],134:[["2B",150,100]]};
-Q.forEach((q,k)=>{if(H[k]!==undefined)q.h=H[k];q.m=MV[k];q.p=q.p||PP[k]});
+const MV={5:[["2B",118,98],["1B",156,140]],6:[["1B",156,140]],24:[["P",126,188]],28:[["SS",118,98]],30:BP,33:[["C",96,190]],37:[["P",156,140]],38:[["P",120,176]],42:[["SS",118,98]],43:[["P",120,176]],44:BP,45:[["SS",118,98],["1B",156,140]],49:[["2B",118,98],["1B",156,140]],50:[["1B",134,152],["2B",156,140]],52:BP,55:[["SS",118,98],["1B",156,140]],57:[["C",170,150]],62:[["SS",118,98],["P",156,140]],63:[["1B",138,130]],64:[["2B",118,98],["1B",156,140]],65:[["2B",138,82]],66:[["2B",156,140],["1B",134,152]],68:[["SS",84,82]],71:[["2B",118,98],["1B",156,140]],74:BP,118:[["2B",118,98],["1B",156,140]],119:[["SS",82,130]],121:BP,122:[["SS",92,100]],124:BP,126:[["1B",156,140]],127:BP,133:[["SS",58,112]],134:[["2B",150,100]]};
+const BS={b1:[150,138],b2:[110,98],b3:[70,138],hp:[110,178]};
+function pt(t,h,mv){if(t==="h")return h?[h[1],h[2]]:XY.P;if(BS[t])return BS[t];const v=(mv||[]).find(x=>x[0]===t);return v?[v[1],v[2]]:XY[t]}
+const BK=[["RF",174,150],["LF",56,152],["CF",110,84]],BPK=BP.concat(BK);
+const MX={73:[["3B",78,146],["LF",56,152]],5:[["CF",110,84],["RF",174,150]],6:[["RF",174,150]],16:[["SS",118,110],["LF",56,152],["CF",150,66]],17:[["SS",82,130],["P",126,188],["CF",64,66]],18:[["1B",138,130],["P",126,188]],19:[["SS",82,130],["CF",64,66],["P",126,188]],20:[["CF",156,66]],21:[["CF",84,64],["LF",62,72]],22:[["SS",82,130]],23:[["LF",56,152]],24:[["1B",138,130]],27:[["SS",82,130]],28:[["CF",110,84]],30:BK,42:[["CF",110,84]],44:BK,45:[["CF",110,84],["RF",174,150]],49:[["CF",110,84],["RF",174,150]],50:BK,51:[["RF",174,150],["C",172,158]],52:BK,63:[["P",126,188],["CF",150,66]],66:BK,74:BK,88:BPK,90:[["SS",82,130]],91:[["SS",82,130],["P",126,188],["CF",64,66]],98:BPK,100:[["SS",82,130],["CF",64,66]],108:BPK,110:[["1B",138,130],["P",126,188],["CF",150,66]],114:[["RF",128,44]],119:[["P",126,188],["CF",64,66]],121:BK,124:BK,127:BK};
+const RN={28:[["b1","b2",1]],42:[["b1","b2",1]],73:[["b2","b3",1]],132:[["b2","b3",1]]};
+const TH={73:[["C","b3"]],5:[["h","2B"],["2B","1B"]],6:[["h","b1"]],16:[["h","SS"],["SS","b3"]],17:[["h","SS"],["SS","hp"]],18:[["h","1B"],["1B","hp"]],19:[["h","SS"],["SS","hp"]],22:[["h","SS"]],23:[["h","b3"]],24:[["h","1B"],["1B","hp"]],27:[["h","SS"]],28:[["C","b2"]],29:[["h","hp"]],30:[["h","2B"]],32:[["h","hp"],["hp","b1"]],37:[["h","P"]],42:[["C","b2"]],44:[["h","2B"]],45:[["h","SS"],["SS","1B"]],49:[["h","2B"],["2B","1B"]],50:[["h","2B"]],51:[["h","b1"]],52:[["h","SS"]],55:[["h","SS"],["SS","1B"]],57:[["h","b1"]],62:[["h","SS"]],63:[["h","1B"],["1B","hp"]],64:[["h","2B"],["2B","1B"]],65:[["h","2B"],["2B","b3"]],66:[["h","2B"]],68:[["h","SS"],["SS","b3"]],71:[["h","2B"],["2B","1B"]],74:[["h","SS"]],88:[["h","SS"]],90:[["h","SS"]],91:[["h","SS"],["SS","hp"]],98:[["h","SS"]],100:[["h","SS"],["SS","hp"]],108:[["h","2B"]],110:[["h","1B"],["1B","hp"]],118:[["h","2B"],["2B","1B"]],119:[["h","SS"],["SS","hp"]],120:[["h","hp"]],121:[["h","SS"]],122:[["h","SS"],["SS","b3"]],123:[["h","b1"]],124:[["h","2B"]],126:[["h","b1"]],127:[["h","2B"]],130:[["h","hp"]],131:[["h","b1"]],132:[["C","b3"]],133:[["h","SS"],["SS","b3"]],134:[["h","2B"],["2B","b3"]]};
+Q.forEach((q,k)=>{if(H[k]!==undefined)q.h=H[k];const mm=(MV[k]||[]).concat(MX[k]||[]);q.m=mm.length?mm:undefined;q.t=TH[k];q.r=RN[k];q.p=q.p||PP[k]});
 const app=document.getElementById("app");
 const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const POS=[["P","Pitcher"],["C","Catcher"],["1B","First base"],["2B","Second base"],["SS","Shortstop"],["3B","Third base"],["LF","Left field"],["CF","Center field"],["RF","Right field"]];
 const XY={P:[110,152],C:[110,192],"1B":[164,130],"2B":[134,112],SS:[86,112],"3B":[56,130],LF:[52,78],CF:[110,56],RF:[168,78]};
-let deck,i,score,missed,done,me="";
-function dia(b,o,h,mv,rv){
+let deck,i,score,missed,done,me="",len=10,streak=0,best=0,xpg=0,lv0=0,LL=[];
+function dia(b,o,h,mv,rv,th,rn){
   const P=[[150,138],[110,98],[70,138]],n=["first","second","third"];
   const r=b.map((v,k)=>v?n[k]:"").filter(Boolean);
-  let s=`<svg viewBox="0 0 220 202" width="210" role="img" aria-label="Runners on ${r.length?r.join(" and "):"no bases"}, ${o} out${h?", ball hit to "+where(h):""}${XY[me]?", you play "+me:""}"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#111111"/></marker></defs><path d="M110,178 L4,72 A150,150 0 0 1 216,72 Z" fill="var(--grass)"/><path d="M110,178 L150,138 L110,98 L70,138 Z" fill="#C8A56A"/><path d="M110,178 L4,72 M110,178 L216,72" stroke="#fff" stroke-width="2" fill="none"/><path d="M4,72 A150,150 0 0 1 216,72" stroke="#FF8A1F" stroke-width="3" fill="none"/>`;
+  let s=`<svg viewBox="0 0 220 202" width="210" role="img" aria-label="Runners on ${r.length?r.join(" and "):"no bases"}, ${o} out${h?", ball hit to "+where(h):""}${XY[me]?", you play "+me:""}"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#111111"/></marker><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#FF8A1F"/></marker></defs><path d="M110,178 L4,72 A150,150 0 0 1 216,72 Z" fill="var(--grass)"/><path d="M110,178 L150,138 L110,98 L70,138 Z" fill="#C8A56A"/><path d="M110,178 L4,72 M110,178 L216,72" stroke="#fff" stroke-width="2" fill="none"/><path d="M4,72 A150,150 0 0 1 216,72" stroke="#FF8A1F" stroke-width="3" fill="none"/>`;
   P.forEach((p,k)=>{s+=`<rect x="${p[0]-6}" y="${p[1]-6}" width="12" height="12" transform="rotate(45 ${p[0]} ${p[1]})" fill="${b[k]?"var(--ball)":"#fff"}" stroke="#111111" stroke-width="1.5"/>`});
   s+=`<polygon points="110,184 116,178 116,173 104,173 104,178" fill="#fff" stroke="#111111" stroke-width="1.5"/>`;
-  if(h){const [t,x,y]=h,c=t==="f"?`Q${(110+x)/2},${Math.min(172,y)-45} ${x},${y}`:`L${x},${y}`,d=`M110,172 ${c}`;s+=`<path d="${d}" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.1 8"/><path d="${d}" fill="none" stroke="#DDEB3A" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="0.1 8"/><circle cx="${x}" cy="${y}" r="7" fill="#DDEB3A" stroke="#111111" stroke-width="2"/>`}
+  if(h){const [t,x,y]=h,c=t==="f"?`Q${(110+x)/2},${Math.min(172,y)-45} ${x},${y}`:`L${x},${y}`,d=`M110,172 ${c}`;s+=`<path d="${d}" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.1 8"/><path d="${d}" fill="none" stroke="#DDEB3A" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="0.1 8"/><circle cx="${x}" cy="${y}" r="7" fill="#DDEB3A" stroke="#111111" stroke-width="2"/>${rv&&!matchMedia("(prefers-reduced-motion: reduce)").matches?`<circle r="6" fill="#DDEB3A" stroke="#111111" stroke-width="2"><animateMotion path="${d}" dur="1s" fill="freeze"/></circle>`:""}`}
   const rm=matchMedia("(prefers-reduced-motion: reduce)").matches,mo={};
   (mv||[]).forEach(v=>{mo[v[0]]=v});
   if(rv&&mv)mv.forEach(v=>{const a=XY[v[0]],dx=v[1]-a[0],dy=v[2]-a[1],l=Math.hypot(dx,dy);if(l>14)s+=`<path d="M${a[0]},${a[1]} L${v[1]-dx/l*11},${v[2]-dy/l*11}" stroke="#111111" stroke-width="3" stroke-dasharray="6 4" fill="none" marker-end="url(#ar)"/>`});
-  ["P","C","1B","2B","SS","3B"].forEach(p=>{const a=XY[p],v=rv?mo[p]:null,e=v?[v[1],v[2]]:a,go=v&&!rm,x0=go?a[0]:e[0],y0=go?a[1]:e[1],you=p===me,an=(k,f,t)=>go?`<animate attributeName="${k}" from="${f}" to="${t}" dur="1.2s" begin="0.2s" fill="freeze"/>`:"";
-    s+=`<circle cx="${x0}" cy="${y0}" r="9" fill="${you?"#111111":"#fff"}" stroke="${you?"#FF8A1F":"#111111"}" stroke-width="2">${an("cx",a[0],e[0])}${an("cy",a[1],e[1])}</circle><text x="${x0}" y="${y0+3}" text-anchor="middle" font-size="9" font-weight="700" fill="${you?"#fff":"#111111"}" font-family="Arial,sans-serif">${p}${an("x",a[0],e[0])}${an("y",a[1]+3,e[1]+3)}</text>`});
-  const OF=["LF","CF","RF"],m=OF.includes(me)?XY[me]:null;if(m)s+=`<circle cx="${m[0]}" cy="${m[1]}" r="9" fill="#111111" stroke="#FF8A1F" stroke-width="2"/><text x="${m[0]}" y="${m[1]+3}" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="Arial,sans-serif">${me}</text>`;
+  if(rv&&th)th.forEach((t,k)=>{const a=pt(t[0],h,mv),e=pt(t[1],h,mv),dx=e[0]-a[0],dy=e[1]-a[1],l=Math.hypot(dx,dy)||1,d2=`M${a[0]},${a[1]} L${e[0]-dx/l*10},${e[1]-dy/l*10}`,b=(1.2+k*0.8).toFixed(1);
+    s+=`<path d="${d2}" stroke="#FF8A1F" stroke-width="3" fill="none" marker-end="url(#ar2)" opacity="${rm?1:0}">${rm?"":`<set attributeName="opacity" to="1" begin="${b}s" fill="freeze"/>`}</path>${rm?"":`<circle r="5" fill="#fff" stroke="#111111" stroke-width="1.5" opacity="0"><set attributeName="opacity" to="1" begin="${b}s"/><animateMotion path="${d2}" begin="${b}s" dur="0.7s" fill="freeze"/><set attributeName="opacity" to="0" begin="${(+b+0.7).toFixed(1)}s"/></circle>`}`});
+  ["P","C","1B","2B","SS","3B","LF","CF","RF"].forEach(p=>{const a=XY[p],v=rv?mo[p]:null,e=v?[v[1],v[2]]:a,go=v&&!rm,x0=go?a[0]:e[0],y0=go?a[1]:e[1],you=p===me,an=(k,f,t)=>go?`<animate attributeName="${k}" from="${f}" to="${t}" dur="1.2s" begin="0.2s" fill="freeze"/>`:"";
+    s+=`<circle cx="${x0}" cy="${y0}" r="9" fill="${you?ST.jc:"#fff"}" stroke="${you?"#fff":"#111111"}" stroke-width="2">${an("cx",a[0],e[0])}${an("cy",a[1],e[1])}</circle><text x="${x0}" y="${y0+3}" text-anchor="middle" font-size="9" font-weight="700" fill="#111111" font-family="Arial,sans-serif">${you&&ST.jn!==""?ST.jn:p}${an("x",a[0],e[0])}${an("y",a[1]+3,e[1]+3)}</text>`});
+  if(rv&&rn)rn.forEach(r=>{const a=BS[r[0]],e=BS[r[1]],tx=(x,y)=>`<text x="${x}" y="${y+3}" text-anchor="middle" font-size="9" font-weight="700" fill="#111111" font-family="Arial,sans-serif">R`,an=(k,f,t)=>`<animate attributeName="${k}" from="${f}" to="${t}" dur="1.4s" begin="0.2s" fill="freeze"/>`;
+    s+=rm?`<circle cx="${e[0]}" cy="${e[1]}" r="8" fill="#DDEB3A" stroke="#111111" stroke-width="2"/>${tx(e[0],e[1])}</text>`:`<circle cx="${a[0]}" cy="${a[1]}" r="8" fill="#DDEB3A" stroke="#111111" stroke-width="2">${an("cx",a[0],e[0])}${an("cy",a[1],e[1])}</circle>${tx(a[0],a[1])}${an("x",a[0],e[0])}${an("y",a[1]+3,e[1]+3)}</text>`;
+    if(r[2]){const b=(1.2+((th||[]).length||1)*0.8-0.1).toFixed(1);s+=`<text x="${e[0]}" y="${e[1]-14}" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" stroke="#111111" stroke-width="3" paint-order="stroke" font-family="Arial,sans-serif" opacity="${rm?1:0}">OUT!${rm?"":`<set attributeName="opacity" to="1" begin="${b}s" fill="freeze"/>`}</text>`}});
+  const m=null;if(m)s+=`<circle cx="${m[0]}" cy="${m[1]}" r="9" fill="${ST.jc}" stroke="#fff" stroke-width="2"/><text x="${m[0]}" y="${m[1]+3}" text-anchor="middle" font-size="9" font-weight="700" fill="#111111" font-family="Arial,sans-serif">${ST.jn!==""?ST.jn:me}</text>`;
   return s+`</svg>`;
 }
 function where(h){const s=h[1]<90?"left":h[1]>130?"right":"middle";return "the "+s+" part of the "+(h[2]>=100?"infield":"outfield")}
@@ -222,24 +238,53 @@ const LS="softballMissed";
 function ld(){try{return JSON.parse(localStorage.getItem(LS)||"[]")}catch(e){return[]}}
 function sv(a){try{localStorage.setItem(LS,JSON.stringify(a))}catch(e){}}
 function review(list){
-  app.innerHTML=`<button class="menu" id="menu">\u2190 Main menu</button><h1>Review</h1><p style="margin:0 0 12px;color:var(--mute)">${list.length} missed ${list.length===1?"play":"plays"}. Study the diagram and the best answer.</p>`+list.map(q=>`<div class="card" style="margin-bottom:14px"><div class="row"><div>${dia(q.b,q.o,q.h,q.m,1)}</div><div><div class="tag">${q.c}</div><p class="q">${q.q}</p></div></div>${q.pick?`<div class="fb no"><b>Your answer:</b> ${q.pick}</div>`:""}<div class="fb ok"><b>Best answer:</b> ${q.a[0]}<div style="margin-top:6px">${q.e}</div></div></div>`).join("")+`<div class="opts"><button class="go" id="rt">Retry these plays</button></div>`;
+  app.innerHTML=`<button class="menu" id="menu">\u2190 Main menu</button><h1>Review</h1><p style="margin:0 0 12px;color:var(--mute)">${list.length} missed ${list.length===1?"play":"plays"}. Study the diagram and the best answer.</p>`+list.map(q=>`<div class="card" style="margin-bottom:14px"><div class="row"><div>${dia(q.b,q.o,q.h,q.m,1,q.t,q.r)}</div><div><div class="tag">${q.c}</div><p class="q">${q.q}</p></div></div>${q.pick?`<div class="fb no"><b>Your answer:</b> ${q.pick}</div>`:""}<div class="fb ok"><b>Best answer:</b> ${q.a[0]}<div style="margin-top:6px">${q.e}</div></div></div>`).join("")+`<div class="opts"><button class="go" id="rt">Retry these plays</button></div>`;
   document.getElementById("menu").onclick=home;
   document.getElementById("rt").onclick=()=>start(list);
 }
-function home(){
-  app.innerHTML=`<p style="margin:0;color:var(--mute)">Choose offense or defense. Pick the best play, then see why it works.</p>
-  <h2 class="sec">Offense</h2><div class="cats"><button class="cat" data-c="OH"><b>Hitting</b><span>${Q.filter(x=>x.c==="Hitting").length} questions</span></button><button class="cat" data-c="OR"><b>Rules for batters and runners</b><span>${Q.filter(x=>x.p==="*"&&x.c!=="Hitting").length} questions</span></button><button class="cat" data-c="OA"><b>All offense</b><span>${Q.filter(x=>x.p==="*").length} questions, shuffled</span></button></div><h2 class="sec">Defense: pick your position</h2><div class="cats">
-  
-  ${POS.map(([c,n])=>`<button class="cat" data-c="${c}"><b>${n}</b><span>${Q.filter(x=>mine(x,c)).length} questions</span></button>`).join("")}<button class="cat" data-c="All"><b>All defense</b><span>${Q.filter(x=>x.p!=="*").length} questions, shuffled</span></button>${(()=>{const n=ld().filter(t=>Q.some(x=>x.q===t)).length;return n?`<button class="cat" data-c="REV"><b>Review missed</b><span>${n} saved from earlier rounds</span></button>`:""})()}
-  </div>`;
-  app.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{if(b.dataset.c==="REV"){me="";review(Q.filter(x=>ld().includes(x.q)));return}const c=b.dataset.c;if(c.length===2&&c[0]==="O"){me="";start(Q.filter(x=>x.p==="*"&&(c==="OA"||(c==="OH")===(x.c==="Hitting"))));return}me=c;start(c==="All"?Q.filter(x=>x.p!=="*"):Q.filter(x=>mine(x,c)))});
+const SK="softballIQ",LV=[["Rookie",0],["Starter",100],["All-Star",300],["MVP",600]],JC=["#FF8A1F","#F5F1E8","#DDEB3A","#3FA0FF","#FF5FA8","#A66BFF"];
+const BG={P:["Ace","10 correct as pitcher"],C:["Field General","10 correct as catcher"],"1B":["Stretch Queen","10 correct at first base"],"2B":["Pivot Pro","10 correct at second base"],SS:["Shortstop Star","10 correct at shortstop"],"3B":["Hot Corner Hero","10 correct at third base"],LF:["Left Field Lightning","10 correct in left field"],CF:["Center Field Captain","10 correct in center field"],RF:["Right Field Rocket","10 correct in right field"],OFF:["Slugger","10 correct on offense"],fire:["On Fire","5 correct in a row"],perf:["Perfect Round","A 10-question round with no misses"]};
+const d0=()=>({xp:0,jn:"",jc:JC[0],pc:{},bd:[]});
+function gs(){try{return Object.assign(d0(),JSON.parse(localStorage.getItem(SK)||"{}"))}catch(e){return d0()}}
+function ss(){try{localStorage.setItem(SK,JSON.stringify(ST))}catch(e){}}
+let ST=gs();
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const lvl=x=>LV.reduce((k,l,j)=>x>=l[1]?j:k,0);
+function gb(id){if(ST.bd.includes(id))return null;ST.bd.push(id);return BG[id][0]}
+function rk(){const k=lvl(ST.xp),n=LV[k+1];return `<div class="tag"><b style="color:var(--ink)">${LV[k][0]}</b> · ${ST.xp} XP${n?" · "+(n[1]-ST.xp)+" to "+n[0]:" · Top rank!"}</div><div class="bar"><i style="width:${n?Math.round((ST.xp-LV[k][1])/(n[1]-LV[k][1])*100):100}%"></i></div>`}
+function jy(sz){return `<span class="jy" style="background:${ST.jc}${sz?";width:"+sz+"px;height:"+sz+"px;font-size:"+sz/2+"px":""}">${ST.jn||"#"}</span>`}
+function rev(q){const d=document.getElementById("dg");d.innerHTML=dia(q.b,q.o,q.h,q.m,1,q.t,q.r)+`<div class="outs">${[q.m?"Dashed arrows show where teammates move and back up.":"",q.t?"Orange lines show the throws.":"",q.r?"The yellow R is the runner.":""].join(" ").trim()||"Watch where the ball goes."}</div><button class="menu" id="rp" style="margin:8px 0 0">▶ Watch the play again</button>`;document.getElementById("rp").onclick=()=>rev(q)}
+function pf(){
+  app.innerHTML=`<button class="menu" id="menu">← Main menu</button><h1>My player card</h1><div class="card"><div class="row" style="align-items:center;margin:0">${jy(64)}<div style="flex:1 1 180px">${rk()}</div></div>
+  <p class="tag" style="margin:14px 0 6px">Jersey number</p><input id="jn" class="inp" inputmode="numeric" maxlength="2" value="${ST.jn}" aria-label="Jersey number">
+  <p class="tag" style="margin:14px 0 6px">Jersey color</p><div class="sw">${JC.map(c=>`<button class="swb${c===ST.jc?" sel":""}" data-c="${c}" style="background:${c}" aria-label="Jersey color ${c}"></button>`).join("")}</div></div>
+  <h2 class="sec">Badges</h2><div class="cats">${Object.keys(BG).map(k=>{const on=ST.bd.includes(k);return `<div class="card" style="opacity:${on?1:.55}"><b>${on?"⭐ ":"🔒 "}${BG[k][0]}</b><div class="tag">${BG[k][1]}</div></div>`}).join("")}</div>`;
+  document.getElementById("menu").onclick=home;
+  document.getElementById("jn").oninput=e=>{ST.jn=e.target.value.replace(/\D/g,"").slice(0,2);ss();const c=app.querySelector(".jy");if(c)c.textContent=ST.jn||"#"};
+  app.querySelectorAll(".swb").forEach(b=>b.onclick=()=>{ST.jc=b.dataset.c;ss();pf()});
 }
-function start(list){deck=sh(list);i=0;score=0;missed=[];show()}
+function home(){
+  const n=ld().filter(t=>Q.some(x=>x.q===t)).length;
+  app.innerHTML=`<p style="margin:0;color:var(--mute)">Choose offense or defense. Pick the best play, then see why it works.</p>
+  <div class="card" style="margin:14px 0 0"><div class="row" style="margin:0;align-items:center">${jy()}<div style="flex:1 1 160px">${rk()}</div><button class="menu" id="pc" style="margin:0">My card</button></div></div>
+  <div class="opts" style="grid-template-columns:1fr 1fr;margin:12px 0 0"><button class="opt${len?" sel":""}" id="l10">Quick play: 10</button><button class="opt${len?"":" sel"}" id="lA">Full deck</button></div>
+  <h2 class="sec">Offense</h2><div class="cats"><button class="cat" data-c="OH"><b>Hitting</b><span>${Q.filter(x=>x.c==="Hitting").length} questions</span></button><button class="cat" data-c="OR"><b>Rules for batters and runners</b><span>${Q.filter(x=>x.p==="*"&&x.c!=="Hitting").length} questions</span></button><button class="cat" data-c="OA"><b>All offense</b><span>${Q.filter(x=>x.p==="*").length} questions, shuffled</span></button></div><h2 class="sec">Defense: pick your position</h2><div class="cats">
+  ${POS.map(([c,m])=>`<button class="cat" data-c="${c}"><b>${m}</b><span>${Q.filter(x=>mine(x,c)).length} questions</span></button>`).join("")}<button class="cat" data-c="All"><b>All defense</b><span>${Q.filter(x=>x.p!=="*").length} questions, shuffled</span></button>${n?`<button class="cat" data-c="REV"><b>Review missed</b><span>${n} saved from earlier rounds</span></button>`:""}
+  </div>`;
+  app.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{const c=b.dataset.c;
+    if(c==="REV"){me="";review(Q.filter(x=>ld().includes(x.q)));return}
+    if(c.length===2&&c[0]==="O"){me="";start(Q.filter(x=>x.p==="*"&&(c==="OA"||(c==="OH")===(x.c==="Hitting"))));return}
+    me=c;start(c==="All"?Q.filter(x=>x.p!=="*"):Q.filter(x=>mine(x,c)))});
+  document.getElementById("pc").onclick=pf;
+  document.getElementById("l10").onclick=()=>{len=10;home()};
+  document.getElementById("lA").onclick=()=>{len=0;home()};
+}
+function start(list){LL=list;deck=sh(list);if(len)deck=deck.slice(0,len);i=0;score=0;missed=[];streak=0;best=0;xpg=0;lv0=lvl(ST.xp);show()}
 function show(){
   const q=deck[i];done=false;
   const opts=sh(q.a.map((t,k)=>({t,k})));
-  app.innerHTML=`<button class="menu" id="menu">← Main menu</button><div class="sb"><span>Question <b>${i+1}</b> of ${deck.length}</span><span>Score <b>${score}</b></span></div>
-  <div class="card"><div class="row"><div><div id="dg">${dia(q.b,q.o,q.h,q.m,0)}</div>${outs(q.o)}${q.h?`<div class="outs">Dotted line shows where the ball goes</div>`:""}</div><div><div class="tag">${q.c}</div><p class="q">${q.q}</p></div></div>
+  app.innerHTML=`<button class="menu" id="menu">← Main menu</button><div class="sb"><span>Question <b>${i+1}</b> of ${deck.length}</span><span>Score <b>${score}</b> Streak <b>${streak}</b></span></div>
+  <div class="card"><div class="row"><div><div id="dg">${dia(q.b,q.o,q.h,q.m,0)}</div>${outs(q.o)}${q.h?`<div class="outs">Dotted line shows where the ball goes</div>`:""}</div><div><div class="tag">${q.again?"Second chance":q.c}</div><p class="q">${q.q}</p></div></div>
   <div class="opts" id="opts">${opts.map(o=>`<button class="opt" data-k="${o.k}">${o.t}</button>`).join("")}</div>
   <div id="fb" aria-live="polite"></div></div>`;
   app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(b,q));
@@ -247,25 +292,45 @@ function show(){
 }
 function pick(btn,q){
   if(done)return;done=true;
-  const right=btn.dataset.k==="0";
-  if(right){score++;sv(ld().filter(x=>x!==q.q))}else{q.pick=btn.textContent;missed.push(q);sv([...new Set([...ld(),q.q])])}
-  if(q.m)document.getElementById("dg").innerHTML=dia(q.b,q.o,q.h,q.m,1)+`<div class="outs">Dashed arrows show where your teammates move</div>`;
+  const right=btn.dataset.k==="0";let xp=0,msg,nb=[];
+  if(q.again){
+    if(right){missed=missed.filter(m=>m.q!==q.q);sv(ld().filter(x=>x!==q.q));msg="Nice fix! You've got it now."}
+    else msg="Still tricky. Read the coach's tip."
+  }else if(right){
+    score++;streak++;best=Math.max(best,streak);xp=10+(streak>=3?5:0);sv(ld().filter(x=>x!==q.q));
+    msg=streak>=10?"10 in a row! Unstoppable!":streak>=5?streak+" in a row! You're on fire!":streak>=3?streak+" in a row! Keep it going!":rnd(["That's the play!","Nice read!","Smart ball!","Exactly right!"]);
+    const t=q.p==="*"?"OFF":q.p.split(" ").includes(me)?me:q.p.split(" ")[0];
+    ST.pc[t]=(ST.pc[t]||0)+1;
+    if(ST.pc[t]>=10){const b=gb(t);if(b)nb.push(b)}
+    if(streak>=5){const b=gb("fire");if(b)nb.push(b)}
+  }else{
+    streak=0;q.pick=btn.textContent;missed.push(q);sv([...new Set([...ld(),q.q])]);
+    msg=rnd(["So close! Here's the play.","Good try! Let's learn it.","Not this time. Check the tip!"]);
+    deck.splice(Math.min(i+3,deck.length),0,Object.assign({},q,{again:1}))
+  }
+  const a=lvl(ST.xp);ST.xp+=xp;xpg+=xp;ss();
+  const lu=lvl(ST.xp)>a?" Level up: "+LV[lvl(ST.xp)][0]+"!":"";
   app.querySelectorAll(".opt").forEach(b=>{b.disabled=true;
     if(b.dataset.k==="0")b.classList.add("ok");else if(b===btn)b.classList.add("no");else b.classList.add("dim")});
-  const last=i===deck.length-1;
-  document.getElementById("fb").innerHTML=`<div class="fb ${right?"ok":"no"}"><span class="big">${right?"That's the play!":"Not the best play"}</span>${right?"":`<div><b>Best answer:</b> ${q.a[0]}</div>`}<div style="margin-top:6px">${q.e}</div></div><button class="go" id="next">${last?"See my score":"Next question"}</button>`;
+  const last=i===deck.length-1,j=q.e.indexOf(". "),tip=j<0?q.e:q.e.slice(0,j+1),more=j<0?"":q.e.slice(j+2);
+  document.getElementById("fb").innerHTML=`<div class="fb ${right?"ok":"no"}"><span class="big">${msg}</span>${right?"":`<div><b>Best answer:</b> ${q.a[0]}</div>`}<div style="margin-top:6px"><b>Coach's tip:</b> ${tip}</div>${more?`<div style="margin-top:6px">${more}</div>`:""}${xp?`<div class="tag" style="margin-top:6px">+${xp} XP${lu}</div>`:""}${nb.length?`<div style="margin-top:6px">🏅 New badge: <b>${nb.join(", ")}</b></div>`:""}</div><button class="go" id="next">${last?"See my score":"Next question"}</button>`;
+  if(q.m||q.h||q.t)rev(q);
   const n=document.getElementById("next");n.onclick=()=>{if(last)end();else{i++;show()}};n.focus();
 }
 function end(){
-  const p=Math.round(score/deck.length*100);
-  const msg=p>=90?"All-star IQ.":p>=70?"Solid. You're reading the game well.":"Good start. Review the plays below and try again.";
-  app.innerHTML=`<div class="sb"><span>Final score</span><span><b>${score}</b> of ${deck.length}</span></div>
-  <div class="card"><p class="big" style="font-size:28px;margin:0 0 8px">${msg}</p>
-  ${missed.length?`<p style="margin:0 0 6px"><b>Plays to review</b></p><ul>${missed.map(q=>`<li>${q.q}<br><span style="color:var(--ok)"><b>Best:</b> ${q.a[0]}</span></li>`).join("")}</ul>`:`<p>You got every one. Nice.</p>`}
-  <div class="opts">${missed.length?`<button class="go" id="rv">Review missed plays</button><button class="opt" id="re">Retry missed plays</button>`:""}<button class="opt" id="again">Back to main menu</button></div></div>`;
-  const re=document.getElementById("re");if(re){const m=missed.slice();re.onclick=()=>start(m)}
-  const rv=document.getElementById("rv");if(rv){const m=missed.slice();rv.onclick=()=>review(m)}
-  document.getElementById("again").onclick=home;
+  const tot=deck.filter(x=>!x.again).length,p=Math.round(score/tot*100),nb=[];
+  if(!missed.length&&tot>=10){xpg+=20;ST.xp+=20;const b=gb("perf");if(b)nb.push(b)}
+  ss();
+  const msg=p>=90?"All-star IQ!":p>=70?"Solid. You're reading the game well!":"Good start! Review the plays and go again.";
+  app.innerHTML=`<button class="menu" id="menu">← Main menu</button><div class="sb"><span>Final score</span><span><b>${score}</b> of ${tot}</span></div>
+  <div class="card"><p class="big" style="font-size:28px;margin:0 0 6px">${msg}</p>
+  <p class="tag" style="margin:0 0 8px">Best streak ${best} · +${xpg} XP${lvl(ST.xp)>lv0?" · Level up: "+LV[lvl(ST.xp)][0]+"!":""}</p>${rk()}
+  ${nb.length?`<p style="margin:12px 0 0">🏅 New badge: <b>${nb.join(", ")}</b></p>`:""}
+  <div class="opts">${missed.length?`<button class="go" id="rv">Review missed plays</button><button class="opt" id="re">Retry missed plays</button>`:""}<button class="opt" id="ag">Play again</button><button class="opt" id="again">Back to main menu</button></div></div>`;
+  const m=missed.slice(),rv=document.getElementById("rv"),re=document.getElementById("re");
+  if(rv)rv.onclick=()=>review(m);if(re)re.onclick=()=>start(m);
+  document.getElementById("ag").onclick=()=>start(LL);
+  document.getElementById("again").onclick=home;document.getElementById("menu").onclick=home;
 }
 home();
 </script>
