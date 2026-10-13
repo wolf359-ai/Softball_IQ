@@ -27,6 +27,7 @@ h1,.sec{color:#fff}
 .menu{background:transparent;border:2px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 14px;font-weight:600;font-size:16px;cursor:pointer;margin-bottom:12px}
 .menu:hover{border-color:var(--accent)}
 .opt.sel{border-color:var(--accent)}
+.fe{text-align:center;padding:10px 4px;min-height:48px}
 .jy{display:inline-flex;width:44px;height:44px;border-radius:50%;align-items:center;justify-content:center;color:#111;font:700 22px "Barlow Condensed","Arial Narrow",Arial,sans-serif;border:2px solid #fff;flex:0 0 auto}
 .bar{height:8px;background:#2a2a2a;border-radius:6px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--accent)}
 .inp{background:#0f0f0f;border:2px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit;width:120px}
@@ -317,6 +318,19 @@ function pick(btn,q){
   if(q.m||q.h||q.t)rev(q);
   const n=document.getElementById("next");n.onclick=()=>{if(last)end();else{i++;show()}};n.focus();
 }
+let fl="";
+const esc=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function secName(){return me==="All"?"All defense":me?(POS.find(x=>x[0]===me)||[0,me])[1]:"Offense"}
+function coachMsg(name,note){
+  const tot=deck.filter(x=>!x.again).length,ms=missed.slice(0,3).map(q=>q.q.length>70?q.q.slice(0,67)+"...":q.q);
+  return "Softball IQ from "+(name||"a player")+(ST.jn?" #"+ST.jn:"")+"\n"+secName()+": "+score+"/"+tot+", best streak "+best+", rank "+LV[lvl(ST.xp)][0]+"\nFelt: "+(fl||"no rating")+(note?"\nConfusing: "+note:"")+"\n"+(ms.length?"Missed: "+ms.join(" | "):"No misses!")}
+const COACH="+19168719536",smsUrl=t=>"sms:"+COACH+"?&body="+encodeURIComponent(t);
+function build(){const n=document.getElementById("nm").value.trim();ST.nm=n;ss();return coachMsg(n,document.getElementById("nt").value.trim())}
+async function sendCoach(t){
+  const o=document.getElementById("fbo");
+  try{if(navigator.share){await navigator.share({text:t});o.textContent="Sent! Thanks for telling Coach.";return}}catch(e){if(e&&e.name==="AbortError")return}
+  try{await navigator.clipboard.writeText(t);o.textContent="Copied! Paste it into a text to Coach.";return}catch(e){}
+  o.innerHTML='Copy this message and text it to Coach:<textarea readonly class="inp" style="width:100%;height:120px;margin-top:8px">'+esc(t)+'</textarea>'}
 function end(){
   const tot=deck.filter(x=>!x.again).length,p=Math.round(score/tot*100),nb=[];
   if(!missed.length&&tot>=10){xpg+=20;ST.xp+=20;const b=gb("perf");if(b)nb.push(b)}
@@ -326,11 +340,20 @@ function end(){
   <div class="card"><p class="big" style="font-size:28px;margin:0 0 6px">${msg}</p>
   <p class="tag" style="margin:0 0 8px">Best streak ${best} · +${xpg} XP${lvl(ST.xp)>lv0?" · Level up: "+LV[lvl(ST.xp)][0]+"!":""}</p>${rk()}
   ${nb.length?`<p style="margin:12px 0 0">🏅 New badge: <b>${nb.join(", ")}</b></p>`:""}
-  <div class="opts">${missed.length?`<button class="go" id="rv">Review missed plays</button><button class="opt" id="re">Retry missed plays</button>`:""}<button class="opt" id="ag">Play again</button><button class="opt" id="again">Back to main menu</button></div></div>`;
+  <div class="opts">${missed.length?`<button class="go" id="rv">Review missed plays</button><button class="opt" id="re">Retry missed plays</button>`:""}<button class="opt" id="ag">Play again</button><button class="opt" id="again">Back to main menu</button></div></div>
+  <div class="card" style="margin-top:14px"><b>Tell Coach how it went</b>
+  <p class="tag" style="margin:8px 0 6px">How did this round feel?</p>
+  <div class="opts" style="grid-template-columns:repeat(3,1fr);margin:0"><button class="opt fe" data-f="Too hard">😅 Hard</button><button class="opt fe" data-f="Just right">👍 Just right</button><button class="opt fe" data-f="Too easy">😴 Easy</button></div>
+  <p class="tag" style="margin:12px 0 6px">First name (optional)</p><input id="nm" class="inp" maxlength="20" value="${esc(ST.nm||"")}" style="width:100%">
+  <p class="tag" style="margin:12px 0 6px">Anything confusing? (optional)</p><input id="nt" class="inp" maxlength="120" style="width:100%">
+  <a class="go" id="sc" href="sms:+19168719536" style="display:block;text-align:center;text-decoration:none;margin-top:14px">Text Coach</a><button class="opt" id="cp" style="margin-top:10px;text-align:center">Share or copy the message instead</button><div id="fbo" class="tag" style="margin-top:8px" aria-live="polite"></div></div>`;
   const m=missed.slice(),rv=document.getElementById("rv"),re=document.getElementById("re");
   if(rv)rv.onclick=()=>review(m);if(re)re.onclick=()=>start(m);
   document.getElementById("ag").onclick=()=>start(LL);
   document.getElementById("again").onclick=home;document.getElementById("menu").onclick=home;
+  fl="";app.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{fl=b.dataset.f;app.querySelectorAll("[data-f]").forEach(x=>x.classList.toggle("sel",x===b))});
+  document.getElementById("sc").onclick=e=>{e.currentTarget.href=smsUrl(build());document.getElementById("fbo").textContent="Opening a text to Coach. If nothing opens, use the button below."};
+  document.getElementById("cp").onclick=()=>sendCoach(build());
 }
 home();
 </script>
